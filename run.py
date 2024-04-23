@@ -12,8 +12,15 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('lotr_hangman')
 
-characters = SHEET.worksheet('chars')
+def start_game():
+    """
+    Asks player if they want to view instructions
+    """
+    print("Welcome to LOTR Hangman!")
+    print("Do you want to view the instructions?\n")
 
-data = characters.get_all_values()
+    decision = input("Please enter either Y or N:\n")
+    print(f"You have selected {decision}")
+    
 
-print(data)
+start_game()
