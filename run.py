@@ -21,8 +21,6 @@ def start_game():
 
     view_instructions = input("Please enter either Y or N:\n")
     validate_data_instructions(view_instructions)
-
-    # print(f"You have selected {view_instructions}")
     
 def validate_data_instructions(y_or_n):
     """
@@ -33,10 +31,17 @@ def validate_data_instructions(y_or_n):
     try:
         if len(y_or_n) != 1:
             raise ValueError(
-                f"Only 1 letter accepted, you provided {len(y_or_n)}"
+                f"Only 1 letter accepted, you entered {len(y_or_n)}"
             )
     except ValueError as e:
-        print(f"Invalid data: {e}, please enter Y or N.\n")
-
+        print(f"Invalid answer: {e}.\nPlease enter Y or N.\n")
+        return False
+    
+    if y_or_n.upper() == "Y":
+        print("OKAY")
+    elif y_or_n.upper() == "N":
+        print("SAJ")
+    else:
+        print(f"You entered {y_or_n.upper()}, please enter Y or N")
 
 start_game()
