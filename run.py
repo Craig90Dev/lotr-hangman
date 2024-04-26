@@ -12,18 +12,21 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('lotr_hangman')
 
+start_game()
+
 def start_game():
     """
     Asks player if they want to view instructions
     """
     print("Welcome to LOTR Hangman!")
     print("Do you want to view the instructions?\n")
+
+    #Loops through validation function and repeats user input until data received returns True
     while True:
         
         view_instructions = input("Please enter either Y or N:\n")
-
+        #Breaks from while loop 
         if validate_data_instructions(view_instructions):
-            print("data valid")
             break
     
 def validate_data_instructions(y_or_n):
@@ -32,6 +35,8 @@ def validate_data_instructions(y_or_n):
     Raises a ValueError if the input is invalid or if there is more
     than one value.
     """
+    #Checks if the player input is only 1 character long. If not, raises value error
+    #and loops back to while statement.
     try:
         if len(y_or_n) != 1:
             raise ValueError(
@@ -41,6 +46,9 @@ def validate_data_instructions(y_or_n):
         print(f"Invalid answer: {e}.\n")
         return False
     
+    #Returns True if player answers Y or N. Shows instructions if player selects Y, 
+    #starts grab_word function if selects N. Returns False and loops back to while
+    #statement if player answers anything other than Y or N.
     if y_or_n.upper() == "Y":
         print("Guess each letter of the hidden word.")
         print("The word is the name of a character from J.R.R Tolkien's Lord Of The Rings series.")
@@ -59,6 +67,57 @@ def validate_data_instructions(y_or_n):
     return True
 
 def grab_word():
-    print("WORD")
-    
-start_game()
+    """
+    Grabs random word from Google worksheet
+    """
+
+def print_hangman(wrong):
+    if (wrong == 0):
+        print("\n ------|")
+        print("     | ")
+        print("     | ")
+        print("     | ")
+        print("   ===== ")
+
+    elif (wrong == 1):
+        print("\n ------|")
+        print("     |   O")
+        print("     | ")
+        print("     | ")
+        print("   ===== ")
+
+    elif (wrong == 2):
+        print("\n ------|")
+        print("     |   O")
+        print("     |   |")
+        print("     | ")
+        print("   ===== ")
+
+    elif (wrong == 3):
+        print("\n ------|")
+        print("     |   O")
+        print("     |  /|")
+        print("     | ")
+        print("   ===== ")
+
+
+    elif (wrong == 4):
+        print("\n ------|")
+        print("     |   O")
+        print("     |  /|\\")
+        print("     | ")
+        print("   ===== ")
+
+    elif (wrong == 5):
+        print("\n ------|")
+        print("     |   O")
+        print("     |  /|\\")
+        print("     |  /")
+        print("   ===== ")
+
+    elif (wrong == 6):
+        print("\n ------|")
+        print("     |   O")
+        print("     |  /|\\")
+        print("     |  /\\")
+        print("   ===== ")
