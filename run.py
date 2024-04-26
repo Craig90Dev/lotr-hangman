@@ -12,7 +12,7 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('lotr_hangman')
 
-start_game()
+
 
 def start_game():
     """
@@ -28,7 +28,7 @@ def start_game():
         #Breaks from while loop 
         if validate_data_instructions(view_instructions):
             break
-    
+
 def validate_data_instructions(y_or_n):
     """
     Inside the try, ensures the players choice is either a Y or N.
@@ -66,10 +66,34 @@ def validate_data_instructions(y_or_n):
         return False
     return True
 
+def hide_letters(word):
+    """
+    Replaces characters from word with underscores
+    """
+    hidden_word = ""
+    for i in word:
+        if i.isalpha():
+            hidden_word += "_ "
+        else:
+            hidden_word += i
+    return hidden_word    
+
 def grab_word():
     """
     Grabs random word from Google worksheet
     """
+    words = SHEET.worksheet("chars").get_all_values()
+
+    import secrets
+    random_word = (secrets.choice(words))
+
+    chosen_word = str(random_word[0])
+
+    hidden_word = hide_letters(chosen_word)
+    print(hidden_word)
+
+start_game()
+
 
 def print_hangman(wrong):
     if (wrong == 0):
