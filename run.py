@@ -23,11 +23,12 @@ def start_game():
 
     #Loops through validation function and repeats user input until data received returns True
     while True:
-        
         view_instructions = input("Please enter either Y or N:\n")
         #Breaks from while loop 
         if validate_data_instructions(view_instructions):
             break
+
+    main_game()
 
 def validate_data_instructions(y_or_n):
     """
@@ -89,36 +90,91 @@ def grab_word():
 
     chosen_word = str(random_word[0])
 
-    hidden_word = hide_letters(chosen_word)
-    print(hidden_word)
+    return chosen_word
+    
+def main_game():
+    """
+    Runs a while loop to iterate through each of the players guesses, updating guessed_letters
+    variable and updating the hidden word as necessary until the player either guesses the
+    correct word or hits the limit of max_wrong_attempts. While loop breaks when either the player
+    has guessed the word or if all attempts are used up. (Will be updated to play again option)
+    """
+    word = grab_word()
+    hidden_word = hide_letters(word)
+    max_wrong_attempts = 6
+    wrong_attempts = 0
+    guessed_letters = []
 
-start_game()
+    while True:
 
+        guessed_letters_shown = " ".join(guessed_letters)
+        print_hangman(wrong_attempts)
+        print(f"Guessed letters: {guessed_letters_shown}")
+        print(hidden_word)
+
+        guess = input("Guess a letter or the entire word: ").upper()
+
+        if guess == word:
+            print("Congratulations! You've guessed the word correctly:", word)
+            break
+        elif guess in guessed_letters:
+            print("You've already guessed that letter.")
+            continue
+        elif len(guess) == 1 and guess.isalpha():
+            guessed_letters.append(guess)
+            if guess in word:
+                hidden_word = update_hidden_word(word, hidden_word, guess)
+                if hidden_word.replace(" ", "") == word:
+                    print("Congratulations! You've guessed the word correctly:", word)                 
+            else:
+                wrong_attempts += 1
+                if wrong_attempts >= max_wrong_attempts:
+                    print("\n   ------|")
+                    print("     |   O")
+                    print("     |  /|\\")
+                    print("     |  / \\")
+                    print("   ===== ")
+                    print("You've used up all your attempts. The word was:", word)
+                    break          
+        else:
+            print("Invalid input. Please enter a single letter or the entire word.")
+
+def update_hidden_word(word, hidden_word, guess):
+    """
+    Updates the hidden word based on the players guessed letter
+    """
+    updated_hidden_word = ""
+    for i in range(len(word)):
+        if word[i] == guess:
+            updated_hidden_word += guess + " "
+        else:
+            updated_hidden_word += hidden_word[i*2] + " "
+    return updated_hidden_word
 
 def print_hangman(wrong):
     if (wrong == 0):
-        print("\n ------|")
+        print("\n   ------|")
         print("     | ")
         print("     | ")
         print("     | ")
         print("   ===== ")
 
     elif (wrong == 1):
-        print("\n ------|")
+        print("\n   ------|")
         print("     |   O")
         print("     | ")
         print("     | ")
         print("   ===== ")
 
     elif (wrong == 2):
-        print("\n ------|")
+        print("\n   ------|")
         print("     |   O")
         print("     |   |")
         print("     | ")
         print("   ===== ")
 
     elif (wrong == 3):
-        print("\n ------|")
+        print("\n   ------|")
         print("     |   O")
         print("     |  /|")
         print("     | ")
@@ -126,22 +182,17 @@ def print_hangman(wrong):
 
 
     elif (wrong == 4):
-        print("\n ------|")
+        print("\n   ------|")
         print("     |   O")
         print("     |  /|\\")
         print("     | ")
         print("   ===== ")
 
     elif (wrong == 5):
-        print("\n ------|")
+        print("\n   ------|")
         print("     |   O")
         print("     |  /|\\")
         print("     |  /")
         print("   ===== ")
 
-    elif (wrong == 6):
-        print("\n ------|")
-        print("     |   O")
-        print("     |  /|\\")
-        print("     |  /\\")
-        print("   ===== ")
+start_game()
