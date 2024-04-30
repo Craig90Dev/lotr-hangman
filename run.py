@@ -154,6 +154,9 @@ def update_hidden_word(word, hidden_word, guess):
     return updated_hidden_word
 
 def print_hangman(wrong):
+    """
+    Prints the hangman diagram depending on how many wrong guesses the player has made
+    """
     if (wrong == 0):
         print("\n   ------|")
         print("     | ")
