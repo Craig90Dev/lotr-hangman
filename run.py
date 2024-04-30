@@ -113,23 +113,29 @@ def main_game():
         print(hidden_word)
 
         guess = input("Guess a letter or the entire word: ").upper()
-
+        #Player wins if guess matches entire word
         if guess == word:
             print("Congratulations! You've guessed the word correctly:", word)
             break
+        #Checks if the players guessed letter is already in the guessed letters variable
         elif guess in guessed_letters:
             print("You've already guessed that letter.")
             continue
+        #Checks to see if the players guess is a single letter and appends it to the guessed_letters variable
         elif len(guess) == 1 and guess.isalpha():
             guessed_letters.append(guess)
+            #if guessed character is in the hidden word, updates the hidden word
             if guess in word:
                 hidden_word = update_hidden_word(word, hidden_word, guess)
+                #checks to see if the updated hidden word is equal to the word
                 if hidden_word.replace(" ", "") == word:
                     print("Congratulations! You've guessed the word correctly:", word)
                     break
-               
+            #If none of the above conditions are met adds +1 to the wrong answers variable
             else:
                 wrong_attempts += 1
+                #If the wrong attempt is the last allowed attempt then prints final hangman diagram
+                #and gives the final answer to the player
                 if wrong_attempts >= max_wrong_attempts:
                     print("\n   ------|")
                     print("     |   O")
@@ -137,7 +143,8 @@ def main_game():
                     print("     |  / \\")
                     print("   ===== ")
                     print("You've used up all your attempts. The word was:", word)
-                    break          
+                    break
+        #If the player guesses something that is not a single letter prints an "invalid" statement          
         else:
             print("Invalid input. Please enter a single letter or the entire word.")
 
