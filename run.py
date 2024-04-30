@@ -15,22 +15,27 @@ SHEET = GSPREAD_CLIENT.open('lotr_hangman')
 
 def start_game():
     """
-    Asks player if they want to view instructions
+    Starts the game if the player chooses not to view instructions or has already viewed them.
     """
-    print("Welcome to LOTR Hangman!")
-    print("Do you want to view the instructions?\n")
-    #Loops through validation function and repeats user input until data received returns True
+    instructions_viewed = False
+    while not instructions_viewed:
+        print("Welcome to LOTR Hangman!")
+        print("Do you want to view the instructions?\n")
+        # Loops through validation function and repeats user input until data received returns True
+        while True:
+            view_instructions = input("Please enter either Y or N:\n")
+            instructions_viewed = validate_data_instructions(view_instructions)
+            if instructions_viewed:
+                break
+
     while True:
-        view_instructions = input("Please enter either Y or N:\n")
-        if validate_data_instructions(view_instructions):
-            #For play_again function, if true then main_game function is called, if false then
-            #game ends.
-            while True:
-                if main_game():
-                    continue
-                else:
-                    print("Thank you for playing!")
-                    return
+        if main_game():
+            continue
+        else:
+            print("Thank you for playing!")
+            return
+
+
 
 
 def validate_data_instructions(y_or_n):
@@ -39,8 +44,8 @@ def validate_data_instructions(y_or_n):
     Raises a ValueError if the input is invalid or if there is more
     than one value.
     """
-    #Checks if the player input is only 1 character long. If not, raises value error
-    #and loops back to while statement.
+    # Checks if the player input is only 1 character long. If not, raises value error
+    # and loops back to while statement.
     try:
         if len(y_or_n) != 1:
             raise ValueError(
@@ -49,9 +54,9 @@ def validate_data_instructions(y_or_n):
     except ValueError as e:
         print(f"Invalid answer: {e}.\n")
         return False
-    #Returns True if player answers Y or N. Shows instructions if player selects Y, 
-    #starts grab_word function if selects N. Returns False and loops back to while
-    #statement if player answers anything other than Y or N.
+    # Returns True if player answers Y or N. Shows instructions if player selects Y, 
+    # starts grab_word function if selects N. Returns False and loops back to while
+    # statement if player answers anything other than Y or N.
     if y_or_n.upper() == "Y":
         print("Guess each letter of the hidden word.")
         print("The word is the name of a character from J.R.R Tolkien's Lord Of The Rings series.")
@@ -61,7 +66,7 @@ def validate_data_instructions(y_or_n):
         print("If all body parts on the Hangman diagram are shown you lose.")
         print("You can try and guess the word at any time during the game.\n")
         print("Good Luck!\n")
-        grab_word()
+        return True
     elif y_or_n.upper() == "N":
         return True 
     else:
