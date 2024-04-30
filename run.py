@@ -125,7 +125,9 @@ def main_game():
             if guess in word:
                 hidden_word = update_hidden_word(word, hidden_word, guess)
                 if hidden_word.replace(" ", "") == word:
-                    print("Congratulations! You've guessed the word correctly:", word)                 
+                    print("Congratulations! You've guessed the word correctly:", word)
+                    break
+               
             else:
                 wrong_attempts += 1
                 if wrong_attempts >= max_wrong_attempts:
@@ -148,7 +150,7 @@ def update_hidden_word(word, hidden_word, guess):
         if word[i] == guess:
             updated_hidden_word += guess + " "
         else:
-            updated_hidden_word += hidden_word[i*2] + " "
+            updated_hidden_word += hidden_word[2*i] + " "
     return updated_hidden_word
 
 def print_hangman(wrong):
