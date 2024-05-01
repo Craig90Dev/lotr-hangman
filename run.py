@@ -24,7 +24,7 @@ def start_game():
         print("Do you want to view the instructions?\n")
         # Loops through validation function and repeats user input until data received returns True
         while True:
-            view_instructions = input("Please enter either Y or N:\n")
+            view_instructions = input("Please enter either Y or N: \n")
             instructions_viewed = validate_data_instructions(view_instructions)
             if instructions_viewed:
                 break
@@ -124,7 +124,7 @@ def main_game():
             print_hangman(wrong_attempts)
             print(f"Guessed letters: {guessed_letters_shown}")
             print(hidden_word)
-            guess = input("Guess a letter or the entire word: ").upper()
+            guess = input("Guess a letter or the entire word: \n").upper()
 
             # Player wins if guess matches entire word
             if guess == word:
@@ -181,7 +181,7 @@ def play_again():
     """
     while True:
         print("Do you want to play again?")
-        play_again_input = input("Please enter either Y or N: ").upper()
+        play_again_input = input("Please enter either Y or N: \n").upper()
         if play_again_input == 'Y':
             return True
         elif play_again_input == 'N':
