@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from colorama import Fore
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -117,11 +118,11 @@ def main_game():
             print_hangman(wrong_attempts)
             print(f"Guessed letters: {guessed_letters_shown}")
             print(hidden_word)
-
             guess = input("Guess a letter or the entire word: ").upper()
+
             # Player wins if guess matches entire word
             if guess == word:
-                print("Congratulations! You've guessed the word correctly:", word)
+                print(f"{Fore.GREEN}Congratulations! You've guessed the word correctly: {Fore.WHITE}", word)
                 return play_again()
             # Checks if the players guessed letter is already in the guessed letters variable
             elif guess in guessed_letters:
@@ -135,7 +136,7 @@ def main_game():
                     hidden_word = update_hidden_word(word, hidden_word, guess)
                     # checks to see if the updated hidden word is equal to the word
                     if hidden_word.replace(" ", "") == word:
-                        print("Congratulations! You've guessed the word correctly:", word)
+                        print(f"{Fore.GREEN}Congratulations! You've guessed the word correctly: {Fore.WHITE}", word)
                         return play_again()
                 # If none of the above conditions are met adds +1 to the wrong answers variable
                 else:
@@ -148,7 +149,7 @@ def main_game():
                         print("     |  /|\\")
                         print("     |  / \\")
                         print("   ===== ")
-                        print("You've used up all your attempts. The word was:", word)
+                        print(f"{Fore.RED}Sorry, you've used up all your attempts. The word was: {Fore.WHITE}", word)
                         return play_again()
             # If the player guesses something that is not a single letter prints an "invalid" statement
             else:
