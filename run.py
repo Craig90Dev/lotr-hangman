@@ -14,7 +14,6 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('lotr_hangman')
 
-
 def start_game():
     """
     Starts the game if the player chooses not to view instructions or has already viewed them.
@@ -36,9 +35,6 @@ def start_game():
         else:
             print("Thank you for playing!")
             return False
-
-
-
 
 def validate_data_instructions(y_or_n):
     """
@@ -122,7 +118,6 @@ def main_game():
         max_wrong_attempts = 6
         wrong_attempts = 0
         guessed_letters = []
-        print(used_words)
 
         while True:
             guessed_letters_shown = " ".join(guessed_letters)
