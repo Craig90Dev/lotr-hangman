@@ -35,7 +35,7 @@ def start_game():
             continue
         else:
             print("Thank you for playing!")
-            return
+            return False
 
 
 
@@ -93,6 +93,11 @@ def grab_word():
     """
     global used_words
     words = SHEET.worksheet("chars").get_all_values()
+    #If the length of the variables used_words and words are the same, word returns as None, ending
+    #from main_game function if word is None returning false and this message will print to player
+    if len(used_words) == len(words):
+        print("All words have been used.")
+        return        
 
     while True:
         random_word = (secrets.choice(words))
@@ -110,6 +115,9 @@ def main_game():
     """
     while True:
         word = grab_word()
+        #If all words in spreadsheet have been used, return false to end game
+        if word is None:
+            return False
         hidden_word = hide_letters(word)
         max_wrong_attempts = 6
         wrong_attempts = 0
