@@ -1,4 +1,5 @@
 import gspread
+import secrets
 from google.oauth2.service_account import Credentials
 from colorama import Fore
 
@@ -90,14 +91,15 @@ def grab_word():
     """
     Grabs random word from Google worksheet, converts to string and returns as chosen word
     """
+    global used_words
     words = SHEET.worksheet("chars").get_all_values()
 
-    import secrets
-    random_word = (secrets.choice(words))
-
-    chosen_word = str(random_word[0])
-
-    return chosen_word
+    while True:
+        random_word = (secrets.choice(words))
+        chosen_word = str(random_word[0])
+        if chosen_word not in used_words:
+            used_words.append(chosen_word)
+            return chosen_word
     
 def main_game():
     """
@@ -112,6 +114,7 @@ def main_game():
         max_wrong_attempts = 6
         wrong_attempts = 0
         guessed_letters = []
+        print(used_words)
 
         while True:
             guessed_letters_shown = " ".join(guessed_letters)
@@ -183,6 +186,7 @@ def play_again():
         else:
             print("Invalid input. Please enter either Y or N.")
 
+used_words = []
 
 def print_hangman(wrong):
     """
