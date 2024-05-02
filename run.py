@@ -17,14 +17,35 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('lotr_hangman')
 
+global type_delay
+type_delay = 0.01
+
+global welcome_sentences
+welcome_sentences = [
+    "Welcome to LOTR Hangman!\n",
+    "Do you want to view the instructions?\n"
+]
+
+global instruction_sentences
+instruction_sentences = [
+    "Guess each letter of the hidden word.\n",
+    "The word is the name of a character from J.R.R Tolkiens Lord Of The Rings series.\n",
+    "If you guess correctly the letters will be shown in their appropriate place.\n",
+    "If you guess incorrectly a body part will be added to the Hangman image.\n",
+    "If you guess the whole word you win!\n",
+    "If all body parts on the Hangman diagram are shown you lose.\n",
+    "You can try and guess the word at any time during the game.\n",
+    "Good Luck!\n"
+]
+
 def start_game():
     """
     Starts the game if the player chooses not to view instructions or has already viewed them.
     """
     instructions_viewed = False
     while not instructions_viewed:
-        print("Welcome to LOTR Hangman!")
-        print("Do you want to view the instructions?\n")
+        typewriter_effect_welcome(welcome_sentences, type_delay)
+        
         # Loops through validation function and repeats user input until data received returns True
         while True:
             view_instructions = input("Please enter either Y or N: \n")
@@ -46,19 +67,6 @@ def validate_data_instructions(y_or_n):
     Raises a ValueError if the input is invalid or if there is more
     than one value.
     """
-    global type_delay
-    type_delay = 0.02
-    global instruction_sentances
-    instruction_sentances = [
-        "Guess each letter of the hidden word.\n",
-        "The word is the name of a character from J.R.R Tolkiens Lord Of The Rings series.\n",
-        "If you guess correctly the letters will be shown in their appropriate place.\n",
-        "If you guess incorrectly a body part will be added to the Hangman image.\n",
-        "If you guess the whole word you win!\n",
-        "If all body parts on the Hangman diagram are shown you lose.\n",
-        "You can try and guess the word at any time during the game.\n",
-        "Good Luck!\n"
-    ]
     # Checks if the player input is only 1 character long. If not, raises value error
     # and loops back to while statement.
     try:
@@ -73,7 +81,7 @@ def validate_data_instructions(y_or_n):
     # starts grab_word function if selects N. Returns False and loops back to while
     # statement if player answers anything other than Y or N.
     if y_or_n.upper() == "Y":
-        typewriter_effect(instruction_sentances, type_delay)
+        typewriter_effect_instructions(instruction_sentences, type_delay)
         return True
     elif y_or_n.upper() == "N":
         return True 
@@ -81,11 +89,11 @@ def validate_data_instructions(y_or_n):
         print(f"You entered {y_or_n.upper()}\n")
         return False
     
-def typewriter_effect(instruction_sentances, type_delay):
+def typewriter_effect_instructions(instruction_sentences, type_delay):
     """
     Add typewriter effect to print instuctions
     """
-    for sentence in instruction_sentances:
+    for sentence in instruction_sentences:
         for char in sentence:
             sys.stdout.write(char)
             sys.stdout.flush()
@@ -93,6 +101,17 @@ def typewriter_effect(instruction_sentances, type_delay):
     
     time.sleep(1)
 
+def typewriter_effect_welcome(welcome_sentances, type_delay):
+    """
+    Add typewriter effect to print welcome message
+    """
+    for sentence in welcome_sentances:
+        for char in sentence:
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            time.sleep(type_delay)
+    
+    time.sleep(1)
 
 def hide_letters(word):
     """
@@ -145,7 +164,7 @@ def main_game():
         while True:
             guessed_letters_shown = " ".join(guessed_letters)
             print_hangman(wrong_attempts)
-            print(f"Guessed letters: {guessed_letters_shown}")
+            print(f"{Fore.BLUE}Guessed letters: {guessed_letters_shown}{Fore.WHITE}")
             print(hidden_word)
             guess = input("Guess a letter or the entire word: \n").upper()
 
