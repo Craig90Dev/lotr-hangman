@@ -1,5 +1,6 @@
 import gspread
 import secrets
+import os
 from google.oauth2.service_account import Credentials
 from colorama import Fore
 
@@ -25,6 +26,7 @@ def start_game():
         # Loops through validation function and repeats user input until data received returns True
         while True:
             view_instructions = input("Please enter either Y or N: \n")
+            clear_screen()
             instructions_viewed = validate_data_instructions(view_instructions)
             if instructions_viewed:
                 break
@@ -128,37 +130,49 @@ def main_game():
 
             # Player wins if guess matches entire word
             if guess == word:
+                clear_screen()
                 print(f"{Fore.GREEN}Congratulations! You've guessed the word correctly: {Fore.WHITE}", word)
                 return play_again()
             # Checks if the players guessed letter is already in the guessed letters variable
             elif guess in guessed_letters:
+                clear_screen()
                 print("You've already guessed that letter.")
                 continue
             # Checks to see if the players guess is a single letter and appends it to the guessed_letters variable
             elif len(guess) == 1 and guess.isalpha():
+                clear_screen()
                 guessed_letters.append(guess)
                 # if guessed character is in the hidden word, updates the hidden word
                 if guess in word:
+                    clear_screen()
+                    print(f"{Fore.GREEN}Good job! You found a letter! {Fore.WHITE}")
                     hidden_word = update_hidden_word(word, hidden_word, guess)
                     # checks to see if the updated hidden word is equal to the word
                     if hidden_word.replace(" ", "") == word:
+                        clear_screen()
                         print(f"{Fore.GREEN}Congratulations! You've guessed the word correctly: {Fore.WHITE}", word)
                         return play_again()
                 # If none of the above conditions are met adds +1 to the wrong answers variable
                 else:
+                    clear_screen()
+                    print(f"{Fore.RED}Sorry, that letter is not in the word! {Fore.WHITE}")
                     wrong_attempts += 1
                     # If the wrong attempt is the last allowed attempt then prints final hangman diagram
                     # and gives the final answer to the player
                     if wrong_attempts >= max_wrong_attempts:
+                        clear_screen()
+                    
                         print("\n   ------|")
                         print("     |   O")
                         print("     |  /|\\")
                         print("     |  / \\")
                         print("   ===== ")
                         print(f"{Fore.RED}Sorry, you've used up all your attempts. The word was: {Fore.WHITE}", word)
+
                         return play_again()
             # If the player guesses something that is not a single letter prints an "invalid" statement
             else:
+                clear_screen()
                 print("Invalid input. Please enter a single letter or the entire word.")
 
 def update_hidden_word(word, hidden_word, guess):
@@ -183,13 +197,23 @@ def play_again():
         print("Do you want to play again?")
         play_again_input = input("Please enter either Y or N: \n").upper()
         if play_again_input == 'Y':
+            clear_screen()
             return True
         elif play_again_input == 'N':
+            clear_screen()
             return False
         else:
+            clear_screen()
             print("Invalid input. Please enter either Y or N.")
 
 used_words = []
+
+def clear_screen():
+    """
+    Function clears the terminal (screen).
+    """
+    os.system('clear')
+    return
 
 def print_hangman(wrong):
     """
