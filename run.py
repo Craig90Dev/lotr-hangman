@@ -1,6 +1,8 @@
 import gspread
 import secrets
 import os
+import sys
+import time
 from google.oauth2.service_account import Credentials
 from colorama import Fore
 
@@ -44,6 +46,19 @@ def validate_data_instructions(y_or_n):
     Raises a ValueError if the input is invalid or if there is more
     than one value.
     """
+    global type_delay
+    type_delay = 0.02
+    global instruction_sentances
+    instruction_sentances = [
+        "Guess each letter of the hidden word.\n",
+        "The word is the name of a character from J.R.R Tolkiens Lord Of The Rings series.\n",
+        "If you guess correctly the letters will be shown in their appropriate place.\n",
+        "If you guess incorrectly a body part will be added to the Hangman image.\n",
+        "If you guess the whole word you win!\n",
+        "If all body parts on the Hangman diagram are shown you lose.\n",
+        "You can try and guess the word at any time during the game.\n",
+        "Good Luck!\n"
+    ]
     # Checks if the player input is only 1 character long. If not, raises value error
     # and loops back to while statement.
     try:
@@ -58,20 +73,26 @@ def validate_data_instructions(y_or_n):
     # starts grab_word function if selects N. Returns False and loops back to while
     # statement if player answers anything other than Y or N.
     if y_or_n.upper() == "Y":
-        print("Guess each letter of the hidden word.")
-        print("The word is the name of a character from J.R.R Tolkien's Lord Of The Rings series.")
-        print("If you guess correctly the letters will be shown in their appropriate place.")
-        print("If you guess incorrectly a body part will be added to the Hangman image.")
-        print("If you guess the whole word you win!")
-        print("If all body parts on the Hangman diagram are shown you lose.")
-        print("You can try and guess the word at any time during the game.\n")
-        print("Good Luck!\n")
+        typewriter_effect(instruction_sentances, type_delay)
         return True
     elif y_or_n.upper() == "N":
         return True 
     else:
         print(f"You entered {y_or_n.upper()}\n")
         return False
+    
+def typewriter_effect(instruction_sentances, type_delay):
+    """
+    Add typewriter effect to print instuctions
+    """
+    for sentence in instruction_sentances:
+        for char in sentence:
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            time.sleep(type_delay)
+    
+    time.sleep(1)
+
 
 def hide_letters(word):
     """
