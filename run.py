@@ -129,7 +129,11 @@ def main_game():
             guess = input("Guess a letter or the entire word: \n").upper()
 
             # Player wins if guess matches entire word
-            if guess == word:
+            if len(guess) == len(word) and guess != word:
+                clear_screen()
+                wrong_attempts += 1
+                print(f"{Fore.RED}Sorry, that is not the correct word. {Fore.WHITE}")
+            elif guess == word:
                 clear_screen()
                 print(f"{Fore.GREEN}Congratulations! You've guessed the word correctly: {Fore.WHITE}", word)
                 return play_again()
