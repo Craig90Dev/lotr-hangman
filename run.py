@@ -17,26 +17,33 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('lotr_hangman')
 
-global type_delay
-type_delay = 0.01
+def main():
+    """
+    Main program function
+    """
+    while True:
 
-global welcome_sentences
-welcome_sentences = [
-    "Welcome to LOTR Hangman!\n",
-    "Do you want to view the instructions?\n"
-]
+        global type_delay, welcome_sentences, instruction_sentences, used_words
 
-global instruction_sentences
-instruction_sentences = [
-    "Guess each letter of the hidden word.\n",
-    "The words are names of characters from Tolkien's Lord Of The Rings series.\n",
-    "If you guess correctly the letters will be shown in their appropriate place.\n",
-    "If you guess incorrectly a body part will be added to the Hangman image.\n",
-    "If you guess the whole word you win!\n",
-    "If all body parts on the Hangman diagram are shown you lose.\n",
-    "You can try and guess the word at any time during the game.\n",
-    "Good Luck!\n"
-]
+        type_delay = 0.01
+        used_words = []
+
+        welcome_sentences = [
+            "Welcome to LOTR Hangman!\n",
+            "Do you want to view the instructions?\n"
+        ]
+
+        instruction_sentences = [
+            "Guess each letter of the hidden word.\n",
+            "The words are names of characters from Tolkien's Lord Of The Rings series.\n",
+            "If you guess correctly the letters will be shown in their appropriate place.\n",
+            "If you guess incorrectly a body part will be added to the Hangman image.\n",
+            "If you guess the whole word you win!\n",
+            "If all body parts on the Hangman diagram are shown you lose.\n",
+            "You can try and guess the word at any time during the game.\n",
+            "Good Luck!\n"
+        ]
+        start_game()
 
 def start_game():
     """
@@ -58,7 +65,6 @@ def start_game():
         if main_game():
             continue
         else:
-            print("Thank you for playing!")
             return False
 
 def validate_data_instructions(y_or_n):
@@ -129,7 +135,6 @@ def grab_word():
     """
     Grabs random word from Google worksheet, converts to string and returns as chosen word
     """
-    global used_words
     words = SHEET.worksheet("chars").get_all_values()
     #If the length of the variables used_words and words are the same, word returns as None, ending
     #from main_game function if word is None returning false and this message will print to player
@@ -171,8 +176,8 @@ def main_game():
             # Player wins if guess matches entire word
             if len(guess) == len(word) and guess != word:
                 clear_screen()
-                wrong_attempts += 1
                 print(f"{Fore.RED}Sorry, that is not the correct word. {Fore.WHITE}")
+                wrong_attempts += 1
             elif guess == word:
                 clear_screen()
                 print(f"{Fore.GREEN}Congratulations! You've guessed the word correctly: {Fore.WHITE}", word)
@@ -250,7 +255,6 @@ def play_again():
             clear_screen()
             print("Invalid input. Please enter either Y or N.")
 
-used_words = []
 
 def clear_screen():
     """
@@ -306,4 +310,5 @@ def print_hangman(wrong):
         print("     |  /")
         print("   ===== ")
 
-start_game()
+if __name__ == '__main__':
+    main()
