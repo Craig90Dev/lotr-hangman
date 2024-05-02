@@ -29,7 +29,7 @@ welcome_sentences = [
 global instruction_sentences
 instruction_sentences = [
     "Guess each letter of the hidden word.\n",
-    "The word is the name of a character from J.R.R Tolkiens Lord Of The Rings series.\n",
+    "The words are names of characters from J.R.R Tolkien's The Lord Of The Rings series.\n",
     "If you guess correctly the letters will be shown in their appropriate place.\n",
     "If you guess incorrectly a body part will be added to the Hangman image.\n",
     "If you guess the whole word you win!\n",
