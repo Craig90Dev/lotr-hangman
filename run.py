@@ -140,7 +140,7 @@ def grab_word():
     #from main_game function if word is None returning false and this message will print to player
     if len(used_words) == len(words):
         print("All words have been used.")
-        return        
+        return None
 
     while True:
         random_word = (secrets.choice(words))
@@ -261,7 +261,7 @@ def clear_screen():
     Function clears the terminal (screen).
     """
     os.system('clear')
-    return
+    return None
 
 def print_hangman(wrong):
     """
