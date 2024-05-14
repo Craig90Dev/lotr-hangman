@@ -2,7 +2,7 @@
 
 [Access the live site here.](https://lotr-hangman-82b016ba1627.herokuapp.com/)
 
-<img src="assets/images/ui-dev-image.PNG" alt="UIDev view of the game on various screen sizes">
+![UIDev view of the game on various screen sizes](assets/images/ui-dev-image.PNG)
 
 This is the documentation for the Lord of the Rings. Built using Python for the Milestone 3 Project for Code Institutes Web Development Diploma course. 
 
@@ -93,7 +93,7 @@ The workflow diagram has been created using [Canva](https://www.canva.com/).
 
 <details><summary>Workflow Diagram</summary>
 
-<img src="assets/images/workflow-diagram.PNG" alt="Workflow diagram of LOTR Hangman Game">
+![Workflow diagram of LOTR Hangman Game](assets/images/workflow-diagram.PNG)
 
 </details>
 
@@ -140,11 +140,15 @@ The game gives the player the option to view instructions or jump straight into 
 ### Game Interface
 
 <details><summary>Hangman Start</summary>
-<img src="assets/images/hangman-start.PNG" alt="A screenshot of the hangman image at the start of the game">
+
+![A screenshot of the hangman image at the start of the game](assets/images/hangman-start.PNG)
+
 </details>
 
 <details><summary>Hangman End (Game Losee)</summary>
-<img src="assets/images/hangman-end.PNG" alt="A screenshot of the hangman image at the end of the game (game loss)">
+
+![A screenshot of the hangman image at the end of the game (game loss)](assets/images/hangman-end.PNG)
+
 </details>
 
 The Game Interface is ran in the console due to the nature of Python. Because of this the interface is very basic and just shows text. The hangman diagram is made from a mixture of slashes, vertical bars and equals signs.
@@ -152,11 +156,15 @@ The Game Interface is ran in the console due to the nature of Python. Because of
 ### Correct/Incorrect Results
 
 <details><summary>Correct Result</summary>
-<img src="assets/images/correct-message.PNG" alt="A screenshot of the Correct result message">
+
+![A screenshot of the Correct result message](assets/images/correct-message.PNG)
+
 </details>
 
 <details><summary>Incorrect Result</summary>
-<img src="assets/images/incorrect-message.PNG" alt="A screenshot of the Incorrect result message">
+
+![A screenshot of the Incorrect result message](assets/images/incorrect-message.PNG)
+
 </details>
 
 The result element only appears when the player has guessed a letter. The result text is coloured to depict whether the player got the answer correct or incorrect (Correct being green and Incorrect being red).
@@ -164,7 +172,9 @@ The result element only appears when the player has guessed a letter. The result
 ### Guessed Letters
 
 <details><summary>Guessed Letters</summary>
-<img src="assets/images/guessed-letters.PNG" alt="A screenshot of the Guessed Letters">
+
+![A screenshot of the Guessed Letters](assets/images/guessed-letters.PNG)
+
 </details>
 
 The guessed letters are displayed below the hangman image and above the hidden word and are coloured blue to make them easier to distinguish. The list is updated after each of the players guesses so the player doesn't need to try and remember what letters they have already guessed.
@@ -260,7 +270,9 @@ The steps for deployment are:
 ### Validation
 
 <details><summary>Python Validataion</summary>
-<img src="assets/images/validation.PNG" alt="PEP8 Validation screenshot of Python code">
+
+![PEP8 Validation screenshot of Python code](assets/images/validation.PNG)
+
 </details>
 
 [PEP8](https://pep8ci.herokuapp.com/) was used to validate the Python code for the game via the direct input. Final editing has been done to ensure all results produced were error free.
